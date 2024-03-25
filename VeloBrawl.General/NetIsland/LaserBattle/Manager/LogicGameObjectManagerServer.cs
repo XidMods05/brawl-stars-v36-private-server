@@ -148,9 +148,6 @@ public class LogicGameObjectManagerServer
 
         bitStream.WritePositiveVIntMax255OftenZero(0);
 
-        if (LogicGameModeUtil.HasTimerAndCanEndBeforeTimerRunsOut(gameModeVariation))
-            bitStream.WritePositiveVIntMax65535OftenZero(0);
-
         if (LogicGameModeUtil.RoundResetsWhenObjectiveIsMissing(gameModeVariation))
         {
             bitStream.WriteBoolean(true);
