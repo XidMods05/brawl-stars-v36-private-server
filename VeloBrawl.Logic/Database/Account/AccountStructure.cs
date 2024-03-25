@@ -1,0 +1,35 @@
+﻿namespace VeloBrawl.Logic.Database.Account;
+
+public enum AccountStructure
+{
+    AccountCreatedDate,
+    AccountId,
+    HomeId,
+    PassToken,
+    SessionCount,
+    StartPlayTimeSeconds,
+    PlayTimeSeconds,
+    AvatarName,
+    NameSetByUser,
+    NameChangeEndTime,
+    NameChangeCount,
+    AllianceId,
+    PlayerThumbnailGlobalId,
+    NameColorGlobalId,
+    Trophies,
+    MaxTrophies,
+    TrophyRoadProgress,
+    LastOnlineTime,
+    PlayerStatus,
+    AllianceMemberEntry,
+    LastCreateAllianceTime,
+    LogicOfferBundleList,
+    HomeBrawlerGlobalId,
+    LanguageLaserFactory,
+    SupportedCreator,
+    IntValueEntryX,
+    IntValueEntryY,
+    UserIsAuthed,
+    PlayerAge,
+    NotificationFactoryIntraSignedId
+}
