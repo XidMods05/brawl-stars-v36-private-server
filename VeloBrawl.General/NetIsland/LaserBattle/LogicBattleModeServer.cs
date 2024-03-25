@@ -153,7 +153,7 @@ public class LogicBattleModeServer
                             udpMessage.PiranhaMessage = visionUpdateMessage;
                         }
 
-                        if (_logicGameObjectManagerServer.GetNumGameObjects().Count > 50)
+                        if (_logicGameObjectManagerServer.GetNumGameObjects().Count > 50 || player.TcpModeRefract)
                         {
                             LogicPlayersConnection[player].GetMessaging()!.Send(visionUpdateMessage);
                             _updateTick = 22;
