@@ -684,10 +684,16 @@ public class MessageManager(
         return 1;
     }
 
-    private int ClientInputMessageReceived(ClientInputMessage piranhaMessage)
+    private int ClientInputMessageReceived(PiranhaMessage piranhaMessage)
     {
-        serverConnection!.Disconnect();
-        return 0;
+        InteractiveModule.LogicBattleModeServersMassive!
+            [InteractiveModule.UdpSessionIdsMassive[serverConnection!.GetAccountModel().GetAccountId()]].GetPlayer(
+                (int)InteractiveModule.UdpSessionIdsMassive[serverConnection.GetAccountModel().GetAccountId()], true)!
+            .TcpModeRefract = true;
+
+        new UdpPacketHandler(InteractiveModule.UdpSessionIdsMassive[serverConnection.GetAccountModel().GetAccountId()],
+            piranhaMessage.ByteStream).Receive(true);
+        return 1;
     }
 
     private int CancelMatchmakingMessageReceived(CancelMatchmakingMessage piranhaMessage)
@@ -754,9 +760,6 @@ public class MessageManager(
     {
         var v1 = Saver.OwnMatchmakingManager.MatchmakingManagers[piranhaMessage.GetEventSlot()]
             .AddPlayerToMassive(serverConnection!.GetAccountModel().GetAccountId(), serverConnection);
-        
-        Saver.OwnMatchmakingManager.MatchmakingManagers[piranhaMessage.GetEventSlot()]
-                    .AddPlayerToMassive(serverConnection!.GetAccountModel().GetAccountId() + 1, serverConnection);
         {
             if (v1)
             {
