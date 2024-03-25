@@ -1,8 +1,8 @@
 using System.Net.Sockets;
 using VeloBrawl.General.Cloud;
 using VeloBrawl.General.GHelp;
+using VeloBrawl.General.NetIsland.LaserBattle;
 using VeloBrawl.General.Networking;
-using VeloBrawl.General.Networking.LaserUdp;
 using VeloBrawl.Logic.Database;
 using VeloBrawl.Logic.Database.Account;
 using VeloBrawl.Logic.Database.Alliance;
@@ -12,15 +12,21 @@ using VeloBrawl.Logic.Environment.LaserMessage;
 using VeloBrawl.Logic.Environment.LaserMessage.Laser.Node_1;
 using VeloBrawl.Logic.Environment.LaserMessage.Laser.Node_11;
 using VeloBrawl.Logic.Environment.LaserMessage.Laser.Node_27;
+using VeloBrawl.Logic.Environment.LaserMessage.Laser.Node_4;
 using VeloBrawl.Logic.Environment.LaserMessage.Laser.Node_9;
 using VeloBrawl.Logic.Environment.LaserMessage.Sepo.Alliance;
+using VeloBrawl.Logic.Environment.LaserMessage.Sepo.Home.Laser.Laser;
 using VeloBrawl.Logic.Environment.LaserMessage.Sepo.Mode;
+using VeloBrawl.Logic.Environment.LaserMessage.Sepo.Player;
+using VeloBrawl.Logic.Environment.LaserNotification;
+using VeloBrawl.Logic.Environment.LaserNotification.Laser;
 using VeloBrawl.StaticService.Laser;
 using VeloBrawl.Supercell.Titan.CommonUtils;
 using VeloBrawl.Supercell.Titan.CommonUtils.Utils;
 using VeloBrawl.Titan.Mathematical.Data;
 using VeloBrawl.Titan.Utilities;
 using VeloBrawl.Tools.LaserCsv;
+using VeloBrawl.Tools.LaserCsv.Manufacturer.Laser;
 using VeloBrawl.Tools.LaserData;
 using VeloBrawl.Tools.LaserFactory;
 
@@ -678,16 +684,10 @@ public class MessageManager(
         return 1;
     }
 
-    private int ClientInputMessageReceived(PiranhaMessage piranhaMessage)
+    private int ClientInputMessageReceived(ClientInputMessage piranhaMessage)
     {
-        InteractiveModule.LogicBattleModeServersMassive!
-            [InteractiveModule.UdpSessionIdsMassive[serverConnection!.GetAccountModel().GetAccountId()]].GetPlayer(
-                (int)InteractiveModule.UdpSessionIdsMassive[serverConnection.GetAccountModel().GetAccountId()], true)!
-            .TcpModeRefract = true;
-
-        new UdpPacketHandler(InteractiveModule.UdpSessionIdsMassive[serverConnection.GetAccountModel().GetAccountId()],
-            piranhaMessage.ByteStream).Receive(true);
-        return 1;
+        serverConnection!.Disconnect();
+        return 0;
     }
 
     private int CancelMatchmakingMessageReceived(CancelMatchmakingMessage piranhaMessage)
@@ -753,7 +753,7 @@ public class MessageManager(
     private int MatchmakeRequestMessageReceived(MatchmakeRequestMessage piranhaMessage)
     {
         var v1 = Saver.OwnMatchmakingManager.MatchmakingManagers[piranhaMessage.GetEventSlot()]
-            .AddPlayerToMassive(serverConnection!.GetAccountModel().GetAccountId(), serverConnection);
+            .AddPlayerToMassive(serverConnection!.GetAccountModel().GetAccountId(), serverConnection); 
         {
             if (v1)
             {
@@ -883,7 +883,7 @@ public class MessageManager(
                         {
                             {
                                 1, new IntValueEntry(1,
-                                    GlobalId.CreateGlobalId(CsvHelperTable.Themes.GetId(), 0))
+                                    GlobalId.CreateGlobalId(CsvHelperTable.Themes.GetId(), 26))
                             }
                         });
                 }
