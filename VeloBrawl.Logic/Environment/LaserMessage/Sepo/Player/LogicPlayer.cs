@@ -25,6 +25,8 @@ public class LogicPlayer
     public int OwnObjectId;
     public long SessionId;
 
+    public bool TcpModeRefract { get; set; }
+
     public void Encode(ByteStream byteStream)
     {
         new LogicLong(0, (int)(!_isBot
